@@ -17,11 +17,13 @@ app.get('/', function (req, res) {
     res.sendFile(path.join(__dirname, "index.html"));
   });
 
-app.get('/profile-picture', function (req, res) {
-  let img = fs.readFileSync(path.join(__dirname, "images/profile-1.jpg"));
-  res.writeHead(200, {'Content-Type': 'image/jpg' });
-  res.end(img, 'binary');
-});
+// app.get('/profile-picture', function (req, res) {
+//   let img = fs.readFileSync(path.join(__dirname, "images/profile-1.jpg"));
+//   res.writeHead(200, {'Content-Type': 'image/jpg' });
+//   res.end(img, 'binary');
+// });
+
+// Pay attention to the url
 
 // use when starting application locally with node command
 let mongoUrlLocal = "mongodb://admin:password@localhost:27017";
@@ -41,7 +43,7 @@ let databaseName = "my-db";
 app.post('/update-profile', function (req, res) {
   let userObj = req.body;
 
-  MongoClient.connect(mongoUrlLocal, mongoClientOptions, function (err, client) {
+  MongoClient.connect(mongoUrlDockerCompose, mongoClientOptions, function (err, client) {
     if (err) throw err;
 
     let db = client.db(databaseName);
@@ -63,7 +65,7 @@ app.post('/update-profile', function (req, res) {
 app.get('/get-profile', function (req, res) {
   let response = {};
   // Connect to the db
-  MongoClient.connect(mongoUrlLocal, mongoClientOptions, function (err, client) {
+  MongoClient.connect(mongoUrlDockerCompose, mongoClientOptions, function (err, client) {
     if (err) throw err;
 
     let db = client.db(databaseName);
